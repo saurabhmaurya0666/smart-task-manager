@@ -1,0 +1,95 @@
+<template>
+    <lightning-card title="✨ Smart Task Manager" icon-name="standard:task">
+        <div class="slds-p-around_medium">
+
+            <!-- Add Task Form -->
+            <div class="form-container slds-box slds-theme_default slds-m-bottom_medium">
+                <h2 class="slds-text-heading_small slds-m-bottom_small">➕ Add New Task</h2>
+
+                <lightning-input 
+                    label="Task Title" 
+                    value={taskName} 
+                    onchange={handleInputChange} 
+                    data-field="taskName">
+                </lightning-input>
+
+                <lightning-textarea 
+                    label="Description" 
+                    value={description} 
+                    onchange={handleInputChange} 
+                    data-field="description">
+                </lightning-textarea>
+                
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-combobox 
+                            label="Status" 
+                            value={status} 
+                            options={statusOptions} 
+                            onchange={handleInputChange} 
+                            data-field="status">
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-combobox 
+                            label="Priority" 
+                            value={priority} 
+                            options={priorityOptions} 
+                            onchange={handleInputChange} 
+                            data-field="priority">
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input 
+                            type="date" 
+                            label="Deadline" 
+                            value={dueDate} 
+                            onchange={handleInputChange} 
+                            data-field="dueDate">
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <lightning-button 
+                    label="Save Task" 
+                    onclick={saveTask} 
+                    variant="brand" 
+                    class="slds-m-top_small">
+                </lightning-button>
+            </div>
+
+            <!-- Task List -->
+            <template if:true={tasks}>
+                <h2 class="slds-text-heading_small slds-m-bottom_small">📋 Task List</h2>
+                <div class="task-grid">
+                    <template for:each={tasks} for:item="task">
+                        <div key={task.Id} class="task-card slds-box slds-theme_default">
+                            <div class="slds-grid slds-grid_align-spread">
+                                <h3 class="slds-text-heading_small">{task.Name}</h3>
+                                <lightning-button-icon 
+                                    icon-name="utility:delete" 
+                                    alternative-text="Delete" 
+                                    title="Delete"
+                                    onclick={deleteTask} 
+                                    data-id={task.Id} 
+                                    variant="bare" 
+                                    class="delete-btn">
+                                </lightning-button-icon>
+                            </div>
+                            <p class="slds-text-body_small slds-m-top_x-small">{task.Description__c}</p>
+                            <div class="slds-m-top_small">
+                                <span class="badge status" data-value={task.Status__c}>{task.Status__c}</span>
+                                <span class="badge priority" data-value={task.Priority__c}>{task.Priority__c}</span>
+                                <span class="badge date">Deadline: {task.Deadline__c}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if:false={tasks}>
+                <p class="slds-text-color_weak">No tasks available. Add one above ⬆️</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>
