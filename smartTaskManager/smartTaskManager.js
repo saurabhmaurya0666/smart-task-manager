@@ -56,7 +56,7 @@ export default class SmartTaskManager extends LightningElement {
             Description__c: this.description,
             Status__c: this.status,
             Priority__c: this.priority,
-            Deadline__c: this.dueDate   // ✅ fixed field name
+            Deadline__c: this.dueDate   // 
         };
 
         saveTaskRecord({ task: taskRecord })
