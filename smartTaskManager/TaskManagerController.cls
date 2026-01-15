@@ -1,5 +1,5 @@
 public with sharing class TaskManagerController {
-    
+    //Fetch all tasks
     @AuraEnabled(cacheable=true)
     public static List<Task__c> getTasks() {
         return [
